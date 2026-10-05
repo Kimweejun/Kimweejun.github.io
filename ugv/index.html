@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>UGV 야지 경로판단 발표</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700;900&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  :root { --bg:#FFFFFF; --panel:#F3F5F1; --text:#1E2620; --muted:#5F6B62; --line:#E1E6DE; --accent:#D9971E; --green:#4E9A4A; }
+  * { box-sizing:border-box; }
+  html, body { margin:0; height:100%; }
+  body { background:var(--bg); color:var(--text); font-family:"Noto Sans KR","Malgun Gothic",system-ui,sans-serif; }
+  header { display:flex; align-items:center; gap:16px; padding:10px 16px; border-bottom:1px solid var(--line); flex-wrap:wrap; }
+  header img { height:30px; }
+  header h1 { font-size:15px; margin:0; font-weight:700; flex:1; min-width:200px; color:var(--muted); }
+  nav a { color:var(--muted); text-decoration:none; margin-left:14px; font-size:14px; }
+  nav a.on, nav a:hover { color:var(--accent); }
+  .view { display:none; } .view.on { display:block; }
+  #viewer { padding:16px; }
+  .stage { max-width:1280px; margin:0 auto; position:relative; }
+  .stage img { width:100%; aspect-ratio:16/9; display:block; background:#fff; border-radius:6px; box-shadow:0 4px 20px rgba(30,38,32,.14), 0 0 0 1px var(--line); }
+  .stage video { position:absolute; background:#000; display:none; }
+  .bar { max-width:1280px; margin:14px auto 0; display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+  .bar button { background:var(--panel); color:var(--text); border:1px solid var(--line); border-radius:6px; padding:8px 14px; font:inherit; font-size:14px; cursor:pointer; }
+  .bar button:hover { border-color:var(--accent); }
+  .bar .count { margin-left:auto; color:var(--muted); font-size:14px; }
+  .bar .ttl { font-size:14px; font-weight:700; }
+  #notebox { max-width:1280px; margin:14px auto 0; background:var(--panel); border:1px solid var(--line); border-radius:6px; padding:16px 20px; display:none; white-space:pre-wrap; line-height:1.75; font-size:15px; }
+  #notebox.on { display:block; }
+  #viewer:fullscreen { background:var(--bg); display:flex; flex-direction:column; justify-content:center; }
+  #viewer:fullscreen .stage { width:min(100vw, calc((100vh - 80px) * 16 / 9)); max-width:none; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:16px; padding:16px; max-width:1400px; margin:0 auto; }
+  .grid a { color:var(--text); text-decoration:none; background:var(--panel); border:1px solid var(--line); border-radius:6px; overflow:hidden; display:block; }
+  .grid img { width:100%; display:block; aspect-ratio:16/9; }
+  .grid span { display:block; padding:8px 10px; font-size:13px; }
+  .notes { max-width:960px; margin:0 auto; padding:16px; }
+  .notes section { display:grid; grid-template-columns:240px 1fr; gap:16px; padding:16px 0; border-bottom:1px solid var(--line); }
+  .notes img { width:100%; border-radius:4px; }
+  .notes h2 { font-size:16px; margin:0 0 8px; }
+  .notes p { margin:0; white-space:pre-wrap; line-height:1.7; font-size:14px; color:#3b453e; }
+  @media (max-width:640px) { .notes section { grid-template-columns:1fr; } .bar .count { margin-left:0; } }
+
+  /* ── 인트로 ── */
+  #start { position:fixed; inset:0; z-index:60; background:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:28px; transition:opacity .5s ease; }
+  #start.out { opacity:0; pointer-events:none; }
+  #start img { height:54px; }
+  #play { width:120px; height:120px; border-radius:50%; border:none; background:var(--accent); cursor:pointer; position:relative; box-shadow:0 10px 30px rgba(217,151,30,.35); transition:transform .2s ease, box-shadow .2s ease; }
+  #play:hover { transform:scale(1.06); box-shadow:0 14px 40px rgba(217,151,30,.45); }
+  #play:focus-visible { outline:3px solid #1E2620; outline-offset:4px; }
+  #play::after { content:''; position:absolute; left:50%; top:50%; transform:translate(-38%,-50%); border-left:34px solid #fff; border-top:21px solid transparent; border-bottom:21px solid transparent; }
+  #play::before { content:''; position:absolute; inset:-10px; border-radius:50%; border:2px solid var(--accent); opacity:.5; animation:ring 2s ease-out infinite; }
+  @keyframes ring { from { transform:scale(.92); opacity:.6; } to { transform:scale(1.25); opacity:0; } }
+  #start p { margin:0; color:var(--muted); font-size:15px; text-align:center; line-height:1.7; }
+  #start p b { color:var(--text); font-size:20px; display:block; }
+  #intro { display:none; position:fixed; inset:0; z-index:50; background:#0d120e; color:#F3F5F1; overflow:hidden; cursor:pointer; transition:opacity .9s ease; }
+  #intro.out { opacity:0; pointer-events:none; }
+  #intro canvas { position:absolute; inset:0; width:100%; height:100%; }
+  #code { position:absolute; left:28px; top:24px; width:min(46vw,560px); font:12px/1.65 "JetBrains Mono",Consolas,monospace; color:#7fa77a; opacity:.85; white-space:pre; overflow:hidden; height:40vh; mask-image:linear-gradient(#000 70%,transparent); -webkit-mask-image:linear-gradient(#000 70%,transparent); }
+  #code .k { color:var(--accent); } #code .d { color:#566a58; }
+  .hud { position:absolute; right:28px; top:24px; font:12px/1.8 "JetBrains Mono",Consolas,monospace; color:#9fb59c; text-align:right; }
+  .hud b { color:var(--accent); font-weight:700; }
+  .hud img { height:34px; display:block; margin-left:auto; margin-bottom:12px; }
+  .title { position:absolute; left:6vw; bottom:16vh; max-width:88vw; }
+  .title .tag { font:700 13px "JetBrains Mono",Consolas,monospace; color:var(--accent); letter-spacing:.2em; margin-bottom:14px; opacity:0; transform:translateY(8px); transition:all .6s ease; }
+  .title h2 { margin:0; font-weight:900; font-size:clamp(34px,6.2vw,86px); line-height:1.08; letter-spacing:-.01em; }
+  .title h2 span { display:inline-block; opacity:0; transform:translateY(24px); filter:blur(6px); transition:opacity .5s ease, transform .5s cubic-bezier(.2,.8,.2,1), filter .5s ease; }
+  .title h2 span.on, .title .tag.on, .title .sub.on { opacity:1; transform:none; filter:none; }
+  .title .sub { margin-top:18px; font-size:clamp(15px,1.5vw,20px); color:#c9d1c5; opacity:0; transform:translateY(8px); transition:all .6s ease; }
+  .hint { position:absolute; left:50%; bottom:5vh; transform:translateX(-50%); font:12px "JetBrains Mono",Consolas,monospace; color:#9fb59c; letter-spacing:.15em; animation:blink 1.6s steps(2) infinite; }
+  @keyframes blink { 50% { opacity:.25; } }
+  .scan { position:absolute; left:0; right:0; height:2px; background:linear-gradient(90deg,transparent,var(--accent),transparent); opacity:.5; animation:scan 4.5s linear infinite; }
+  @keyframes scan { from { top:0; } to { top:100%; } }
+  @media (prefers-reduced-motion: reduce) { .scan, .hint { animation:none; } }
+</style>
+</head>
+<body>
+
+<div id="start">
+  <img src="media/logo_dark.png" alt="A4AI">
+  <button id="play" aria-label="인트로 재생"></button>
+  <p><b>군용 UGV 야지 경로판단 AI 프로젝트</b>연구원 김위준 · 2026.10.06</p>
+</div>
+
+<div id="intro" role="dialog" aria-label="인트로 애니메이션">
+  <canvas id="cv"></canvas>
+  <div class="scan"></div>
+  <div id="code" aria-hidden="true"></div>
+  <div class="hud" aria-hidden="true">
+    <img src="media/logo_light.png" alt="">
+    TRAVERSABILITY ENGINE<br>
+    CLASSES <b>5</b> · FREE / LOW / MED / OBST / UNK<br>
+    POINTS <b id="pts">0</b><br>
+    PATH CANDIDATES <b id="cand">0</b>
+  </div>
+  <div class="title">
+    <div class="tag" id="tag">A4AI · OFF-ROAD PATH DECISION AI</div>
+    <h2 id="tt"></h2>
+    <div class="sub" id="sub">무인지상체계가 야지에서 길을 판단하도록 · 연구원 김위준 · 2026.10.06</div>
+  </div>
+  <div class="hint">CLICK OR PRESS ANY KEY TO START</div>
+</div>
+
+<header>
+  <img src="media/logo_dark.png" alt="A4AI">
+  <h1>군용 UGV 야지 경로판단 AI 프로젝트 · 2026.10.06</h1>
+  <nav>
+    <a href="#" id="replay">인트로</a>
+    <a href="#/1" data-v="viewer">발표 보기</a>
+    <a href="#overview" data-v="overview">전체 보기</a>
+    <a href="#notes" data-v="notes">발표자 노트</a>
+    <a href="ugv_presentation.pdf" download>PDF 다운로드</a>
+  </nav>
+</header>
+
+<div id="viewer" class="view">
+  <div class="stage" id="stage">
+    <img id="slide" alt="">
+    <video id="v1" src="media/mob_clip.mp4" poster="media/mob_poster.jpg" controls playsinline preload="metadata"></video>
+    <video id="v2" src="media/gan_clip.mp4" poster="media/gan_poster.jpg" controls playsinline preload="metadata"></video>
+  </div>
+  <div class="bar">
+    <button id="prev" aria-label="이전 슬라이드">◀ 이전</button>
+    <button id="next" aria-label="다음 슬라이드">다음 ▶</button>
+    <button id="tnote">발표 설명 (N)</button>
+    <button id="tfull">전체 화면 (F)</button>
+    <button onclick="location.hash='#overview'">전체 보기</button>
+    <span class="ttl" id="ttl"></span>
+    <span class="count" id="count"></span>
+  </div>
+  <div id="notebox"></div>
+</div>
+<div id="overview" class="view"><div class="grid" id="grid"></div></div>
+<div id="notes" class="view"><div class="notes" id="notelist"></div></div>
+
+<script src="slides.js"></script>
+<script>
+/* ───── 슬라이드 뷰어 ───── */
+const S = window.SLIDES, total = S.length;
+const src = (n) => "slides/" + String(n).padStart(2, "0") + ".png";
+const esc = (t) => t.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" }[c]));
+const VIDEO_SLIDE = 16; // 실제 테스트 영상 슬라이드 (pptx 좌표: 13.333 x 7.5in)
+const VPOS = { v1: [0.6, 1.65, 7.6, 2.1375], v2: [0.6, 4.2875, 7.6, 2.11375] };
+for (const [id, [x, y, w, h]] of Object.entries(VPOS)) {
+  Object.assign(document.getElementById(id).style, { left: x / 13.333 * 100 + "%", top: y / 7.5 * 100 + "%", width: w / 13.333 * 100 + "%", height: h / 7.5 * 100 + "%" });
+}
+let cur = 1;
+document.getElementById("grid").innerHTML = S.map((s, i) => `<a href="#/${i + 1}"><img loading="lazy" src="${src(s.n)}" alt="${esc(s.title)}"><span>${i + 1}. ${esc(s.title)}</span></a>`).join("");
+document.getElementById("notelist").innerHTML = S.map((s, i) => `<section><a href="#/${i + 1}"><img loading="lazy" src="${src(s.n)}" alt=""></a><div><h2>${i + 1}. ${esc(s.title)}</h2><p>${esc(s.notes)}</p></div></section>`).join("");
+function show(n) {
+  cur = Math.min(Math.max(1, n), total);
+  const s = S[cur - 1];
+  const img = document.getElementById("slide");
+  img.src = src(s.n); img.alt = s.title;
+  document.getElementById("ttl").textContent = s.title;
+  document.getElementById("count").textContent = cur + " / " + total;
+  document.getElementById("notebox").textContent = s.notes;
+  const isV = s.n === VIDEO_SLIDE;
+  ["v1", "v2"].forEach((id) => { const v = document.getElementById(id); v.style.display = isV ? "block" : "none"; if (!isV) v.pause(); });
+  if (cur < total) new Image().src = src(S[cur].n);
+}
+function route() {
+  const h = location.hash || "#/1";
+  const v = h.startsWith("#/") ? "viewer" : h.slice(1);
+  document.querySelectorAll(".view").forEach((e) => e.classList.toggle("on", e.id === v));
+  document.querySelectorAll("nav a[data-v]").forEach((a) => a.classList.toggle("on", a.dataset.v === v));
+  if (v === "viewer") show(parseInt(h.slice(2)) || 1);
+}
+const go = (n) => { location.hash = "#/" + Math.min(Math.max(1, n), total); };
+const toggleNote = () => document.getElementById("notebox").classList.toggle("on");
+const toggleFull = () => document.fullscreenElement ? document.exitFullscreen() : document.getElementById("viewer").requestFullscreen();
+document.getElementById("prev").onclick = () => go(cur - 1);
+document.getElementById("next").onclick = () => go(cur + 1);
+document.getElementById("tnote").onclick = toggleNote;
+document.getElementById("tfull").onclick = toggleFull;
+document.getElementById("slide").onclick = () => go(cur + 1);
+document.addEventListener("keydown", (e) => {
+  if (!started) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); playIntro(); } return; }
+  if (introOn) { closeIntro(); e.preventDefault(); return; }
+  if (location.hash && !location.hash.startsWith("#/")) return;
+  if (e.target.tagName === "VIDEO") return;
+  if (["ArrowRight", "PageDown", " "].includes(e.key)) { e.preventDefault(); go(cur + 1); }
+  else if (["ArrowLeft", "PageUp"].includes(e.key)) go(cur - 1);
+  else if (e.key === "Home") go(1);
+  else if (e.key === "End") go(total);
+  else if (e.key === "n" || e.key === "N") toggleNote();
+  else if (e.key === "f" || e.key === "F") toggleFull();
+});
+window.addEventListener("hashchange", route);
+route();
+
+/* ───── 인트로: 야지 지형 점구름 + 라이다 스캔 + 경로 후보 ───── */
+const intro = document.getElementById("intro");
+let introOn = false, started = false;
+const startEl = document.getElementById("start");
+const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+function closeIntro() { introOn = false; intro.classList.add("out"); setTimeout(() => { if (!introOn) intro.style.display = "none"; }, 950); }
+intro.addEventListener("click", closeIntro);
+function playIntro() {
+  started = true; startEl.classList.add("out"); setTimeout(() => startEl.style.display = "none", 500);
+  introOn = true; intro.style.display = "block"; intro.classList.remove("out");
+  resize(); startTitle(); t0 = performance.now(); requestAnimationFrame(frame);
+}
+document.getElementById("play").onclick = (e) => { e.stopPropagation(); playIntro(); };
+document.getElementById("replay").onclick = (e) => { e.preventDefault(); playIntro(); };
+
+// 제목 글자 등장
+const TITLE = ["군용 UGV", "야지 경로판단 AI"];
+const tt = document.getElementById("tt");
+function startTitle() {
+  tt.innerHTML = TITLE.map((l) => [...l].map((c) => `<span>${c === " " ? "&nbsp;" : c}</span>`).join("")).join("<br>");
+  ["tag", "sub"].forEach((id) => document.getElementById(id).classList.remove("on"));
+  const spans = tt.querySelectorAll("span");
+  setTimeout(() => document.getElementById("tag").classList.add("on"), 300);
+  spans.forEach((sp, i) => setTimeout(() => sp.classList.add("on"), reduce ? 0 : 700 + i * 55));
+  setTimeout(() => document.getElementById("sub").classList.add("on"), reduce ? 0 : 900 + spans.length * 55);
+}
+// 흘러가는 코드 로그
+const codeEl = document.getElementById("code");
+const LINES = [
+  "<span class='k'>$</span> ros2 launch ugv_perception traversability.launch.py",
+  "[INFO] camera  /depth_cam/rgb/image_raw/compressed   <span class='d'>30 Hz</span>",
+  "[INFO] lidar   /scan → tf: base_link ← lidar_link",
+  "[INFO] model   lr-aspp-fp16  classes=5",
+  "remap  dirt|asphalt|concrete      → <span class='k'>FREE</span>        cost=0",
+  "remap  grass|puddle|mud|rubble    → <span class='k'>LOW_COST</span>    cost=33",
+  "remap  bush                       → <span class='k'>MEDIUM_COST</span> cost=66",
+  "remap  tree|pole|log|fence|person → <span class='k'>OBSTACLE</span>    cost=100",
+  "remap  void|water|sky             → <span class='k'>UNKNOWN</span>     cost=-1",
+  "[INFO] publish /traversability_segmentation_image/compressed",
+  "costmap.project(points, grid=0.2m)  ...ok",
+  "graph.build(nodes=300)  edges=1091",
+  "astar(start, goal)  candidates=3",
+  "  cand[0] cost=33.44  via FREE",
+  "  cand[1] cost=41.80  via LOW_COST",
+  "  cand[2] cost=57.12  via MEDIUM_COST",
+  "<span class='d'># 예시 출력: 연출용 로그이며 실제 측정값이 아님</span>",
+];
+let li = 0;
+function pushLine() {
+  const div = document.createElement("div");
+  div.innerHTML = LINES[li % LINES.length];
+  codeEl.appendChild(div);
+  if (codeEl.children.length > 40) codeEl.removeChild(codeEl.firstChild);
+  li++;
+}
+for (let i = 0; i < 6; i++) pushLine();
+setInterval(() => { if (introOn && !reduce) pushLine(); }, 420);
+
+// 캔버스: 원근 지형 그리드 + 점구름 색 분류 + 스캔 + 경로
+const cv = document.getElementById("cv"), ctx = cv.getContext("2d");
+let Wd, Ht, DPR = Math.min(devicePixelRatio || 1, 2);
+function resize() { Wd = cv.clientWidth; Ht = cv.clientHeight; cv.width = Wd * DPR; cv.height = Ht * DPR; ctx.setTransform(DPR, 0, 0, DPR, 0, 0); }
+addEventListener("resize", resize); resize();
+// 세계 좌표: X 좌우(m), Z 앞쪽 거리(m), Y 높이(m). 카메라는 로봇 시점에서 앞으로 전진.
+const NX = 120, NZ = 90, HALF = 14, ZNEAR = 1.5, ZFAR = 48, SPEED = 2.2;
+const CLS = ["#4E9A4A", "#D8C23A", "#E08A2E", "#C8423B", "#8a928c"];
+const pathX = (z) => Math.sin(z * 0.09) * 3.2 + Math.sin(z * 0.031) * 2;
+const terrain = (X, Z) => 0.9 * Math.sin(X * 0.32 + Z * 0.05) + 0.6 * Math.cos(Z * 0.21 + X * 0.15) + 0.25 * Math.sin(X * 1.1 + Z * 0.7)
+  + 0.12 * X * X / HALF - 0.6 * Math.exp(-((X - pathX(Z)) ** 2) / 3);
+function classOf(X, Z) {
+  const d = Math.abs(X - pathX(Z));
+  if (d < 1.1) return 0;
+  const n = Math.sin(X * 0.8 + Z * 0.13) + Math.cos(Z * 0.37 - X * 0.4) + 0.6 * Math.sin((X + Z) * 1.9);
+  if (d < 2.2) return n > 1.2 ? 2 : 1;
+  return n > 1.2 ? 3 : n > 0.4 ? 2 : n > -0.5 ? 1 : (Math.abs(X) > HALF * 0.8 ? 4 : 1);
+}
+let ptsCount = 0, t0 = 0;
+function frame(ms) {
+  const t = Math.max(0, ms - t0) / 1000, travel = t * SPEED;
+  const f = Ht * 0.95, cx = Wd * 0.62, horizon = Ht * 0.36, camH = 2.4;
+  const camX = pathX(travel + 2);
+  ctx.fillStyle = "#0d120e"; ctx.fillRect(0, 0, Wd, Ht);
+  const sweep = reduce ? 1 : Math.min(1, t / 5);                 // 처음 5초 동안 스캔으로 색이 드러남
+  const scanZ = ZNEAR + ((t * 14) % (ZFAR - ZNEAR));               // 반복 스캔 라인
+  const step = (ZFAR - ZNEAR) / NZ, frac = (travel % step);
+  let drawn = 0;
+  for (let j = NZ - 1; j >= 0; j--) {
+    const Z = ZNEAR + j * step - frac, Zw = Z + travel;            // 화면 Z, 세계 Z
+    const revealed = Z < ZNEAR + (ZFAR - ZNEAR) * sweep;
+    for (let i = 0; i < NX; i++) {
+      const X = -HALF + (2 * HALF * i) / (NX - 1);
+      const Xw = X + camX, Y = terrain(Xw, Zw);
+      const sx = cx + (X * f) / Z, sy = horizon + ((camH - Y) * f) / Z * 0.42;
+      if (sx < -4 || sx > Wd + 4 || sy > Ht + 4) continue;
+      const near = Math.abs(Z - scanZ) < 0.6;
+      ctx.globalAlpha = Math.min(1, 0.25 + 9 / Z) * (revealed ? 1 : 0.35);
+      ctx.fillStyle = revealed ? CLS[classOf(Xw, Zw)] : "#3d4a3f";
+      const r = Math.min(8, Math.max(1, 20 / Z)) * (near ? 1.6 : 1);
+      ctx.fillRect(sx - r / 2, sy - r / 2, r, r);
+      drawn++;
+    }
+  }
+  // 경로 후보 3개 (가운데 실선이 추천 경로)
+  if (sweep > 0.4) {
+    ctx.lineWidth = 2.4; ctx.globalAlpha = Math.min(1, (sweep - 0.4) * 2.5);
+    [[0, "#ffffff", []], [2.6, "#D9971E", [7, 6]], [-2.8, "#9fb59c", [7, 6]]].forEach(([off, col, dash]) => {
+      ctx.strokeStyle = col; ctx.setLineDash(dash); ctx.beginPath();
+      for (let Z = 2.2, k = 0; Z < 34; Z += 0.3, k++) {
+        const Zw = Z + travel, Xw = pathX(Zw) + off * Math.pow(Math.min(1, (Z - 2.2) / 22), 1.6), X = Xw - camX;
+        const sx = cx + (X * f) / Z, sy = horizon + ((camH - terrain(Xw, Zw) - 0.1) * f) / Z * 0.42;
+        k ? ctx.lineTo(sx, sy) : ctx.moveTo(sx, sy);
+      }
+      ctx.stroke();
+    });
+    ctx.setLineDash([]);
+  }
+  ctx.globalAlpha = 1;
+  const g = ctx.createRadialGradient(cx, Ht * 0.6, Ht * 0.25, cx, Ht * 0.6, Ht * 1.05);
+  g.addColorStop(0, "rgba(13,18,14,0)"); g.addColorStop(1, "rgba(13,18,14,0.75)");
+  ctx.fillStyle = g; ctx.fillRect(0, 0, Wd, Ht);
+  ptsCount += Math.round(drawn / 8);
+  document.getElementById("pts").textContent = ptsCount.toLocaleString();
+  document.getElementById("cand").textContent = sweep > 0.4 ? 3 : 0;
+  if (intro.style.display !== "none") requestAnimationFrame(frame);
+}
+</script>
+</body>
+</html>
