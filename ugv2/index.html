@@ -54,11 +54,13 @@ body.full .top,body.full .bot,body.full #notes{display:none}
 .body{flex:1;min-height:0;display:grid;gap:20px}
 .foot{position:absolute;left:76px;right:76px;bottom:22px;display:flex;justify-content:space-between;font-size:15px;color:#8a958c}
 .src{font-size:16px;color:#7d897f;margin-top:12px}
-.box{background:var(--field);border-radius:12px;padding:24px 30px;display:flex;flex-direction:column;justify-content:center}
+.box{background:none;border-top:3px solid var(--ink);border-radius:0;padding:22px 2px 6px;display:flex;flex-direction:column;justify-content:flex-start}
+.box.amber,.box.ink,.box.fill{border-top:0;border-radius:12px;padding:24px 30px}
 .box.amber{background:var(--amber-soft)}
+.box.fill{background:var(--field)}
 .box.ink{background:var(--ink);color:#fff}
-.box h3{margin:0 0 10px;font-size:31px;font-weight:700;line-height:1.3}
-.box p,.box li{margin:0;font-size:25px;line-height:1.5;color:#2c362f}
+.box h3{margin:0 0 12px;font-size:36px;font-weight:700;line-height:1.28}
+.box p,.box li{margin:0;font-size:28px;line-height:1.5;color:#2c362f}
 .box.ink p{color:#d5ddd2}
 .box ul{margin:0;padding:0;list-style:none;display:grid;gap:8px}
 .box li{padding-left:22px;position:relative}
@@ -72,7 +74,7 @@ body.full .top,body.full .bot,body.full #notes{display:none}
 .photo img{width:100%;height:100%;object-fit:cover;display:block}
 .photo .cap{position:absolute;right:10px;bottom:10px;background:rgba(23,32,26,.72);color:#fff;font-size:14px;padding:4px 10px;border-radius:6px}
 .concept{font-size:14px;color:#7d897f}
-.band{display:flex;gap:18px;align-items:baseline;border-radius:12px;padding:20px 30px;background:var(--field);font-size:25px;line-height:1.5}
+.band{display:flex;gap:18px;align-items:baseline;border-radius:12px;padding:22px 32px;background:var(--field);font-size:28px;line-height:1.5}
 .band b{white-space:nowrap}
 .band.olive{background:#DCE5D6}.band.olive b{color:var(--olive)}
 .band.amber{background:var(--amber-soft)}.band.amber b{color:#b57a10}
@@ -222,7 +224,7 @@ body.noanim *{transition:none!important;animation:none!important}
 <!-- 4 국방 환경 -->
 <section class="slide" data-n="4" data-title="국방 환경 변화"><div class="pad">
   <div class="hd"><h2>국방 환경이 바뀌고 있습니다<span class="lead">병력 대신 로봇이 위험한 임무를 맡는 방향으로 전환 중</span></h2><img src="img/logo_dark.png" alt=""></div>
-  <div class="body" style="grid-template-columns:1fr 1fr;grid-template-rows:1fr auto">
+  <div class="body" style="grid-template-columns:1fr 1fr;grid-template-rows:auto auto;align-content:center;row-gap:34px">
     <div style="display:grid;gap:14px">
       <div class="box rise" style="--d:.05s"><h3>병력 감축</h3><p>줄어드는 인원으로 같은 임무를 수행해야 함</p></div>
       <div class="box rise" style="--d:.12s"><h3>위험지역 임무 증가</h3><p>사람이 직접 들어가기 위험한 임무가 늘어남</p></div>
@@ -230,11 +232,11 @@ body.noanim *{transition:none!important;animation:none!important}
     </div>
     <div class="box amber rise" style="--d:.25s;display:flex;flex-direction:column">
       <h3 style="color:#a86f0c">로봇 투입 수요가 커지는 임무</h3>
-      <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:10px">
-        <div style="background:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:700">GOP·GP 경계</div>
-        <div style="background:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:700">정찰·감시</div>
-        <div style="background:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:700">위험지역 선탐색</div>
-        <div style="background:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:27px;font-weight:700">CBRN(화생방) 대응</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:150px;gap:14px;margin-top:16px">
+        <div style="background:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:700">GOP·GP 경계</div>
+        <div style="background:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:700">정찰·감시</div>
+        <div style="background:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:700">위험지역 선탐색</div>
+        <div style="background:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:700">CBRN(화생방) 대응</div>
       </div>
     </div>
     <div class="band olive rise" style="--d:.35s;grid-column:1/3"><b>정책 방향</b><span>국방혁신 4.0: AI 적용 로봇 등 무인전투체계를 GP/GOP 경계작전에 활용하는 방향 제시</span></div>
@@ -260,21 +262,21 @@ body.noanim *{transition:none!important;animation:none!important}
 <!-- 6 실증 빈칸 -->
 <section class="slide" data-n="6" data-title="실증의 빈칸"><div class="pad">
   <div class="hd"><h2>실증은 시작됐지만, 야지 경로판단은 빈칸입니다<span class="lead">2024년 국방서비스로봇 실증 시범사업: 사족보행 로봇을 육군 1개소에 순찰·정찰용으로 공급</span></h2><img src="img/logo_dark.png" alt=""></div>
-  <div class="body" style="grid-template-columns:1fr 1fr;grid-template-rows:1fr auto">
+  <div class="body" style="grid-template-columns:1fr 1fr;grid-template-rows:auto auto;align-content:center;row-gap:34px">
     <div class="box rise" style="--d:.05s">
       <h3 style="color:var(--muted)">지금까지 실증에서 확인한 것</h3>
       <div style="display:grid;gap:10px;margin-top:14px">
-        <div style="background:#fff;border-radius:8px;padding:14px 18px;font-size:23px">✓&nbsp; 로봇 플랫폼 도입</div>
-        <div style="background:#fff;border-radius:8px;padding:14px 18px;font-size:23px">✓&nbsp; 원격 운용</div>
-        <div style="background:#fff;border-radius:8px;padding:14px 18px;font-size:23px">✓&nbsp; 영상 전송</div>
-        <div style="background:#fff;border-radius:8px;padding:14px 18px;font-size:23px">✓&nbsp; 객체 인식</div>
-        <div style="background:#fff;border-radius:8px;padding:14px 18px;font-size:23px">✓&nbsp; 기본 자율주행</div>
+        <div style="border-bottom:1px solid var(--line);padding:12px 4px;font-size:28px">✓&nbsp; 로봇 플랫폼 도입</div>
+        <div style="border-bottom:1px solid var(--line);padding:12px 4px;font-size:28px">✓&nbsp; 원격 운용</div>
+        <div style="border-bottom:1px solid var(--line);padding:12px 4px;font-size:28px">✓&nbsp; 영상 전송</div>
+        <div style="border-bottom:1px solid var(--line);padding:12px 4px;font-size:28px">✓&nbsp; 객체 인식</div>
+        <div style="border-bottom:1px solid var(--line);padding:12px 4px;font-size:28px">✓&nbsp; 기본 자율주행</div>
       </div>
     </div>
     <div class="box amber rise" style="--d:.2s;display:flex;flex-direction:column">
       <div style="display:flex;justify-content:space-between;align-items:center"><h3 style="color:#a86f0c;margin:0">아직 비어 있는 것</h3><span class="tag amber">이 프로젝트</span></div>
       <ul style="margin-top:16px;flex:1;align-content:start;gap:14px">
-        <li style="font-size:24px">지형별 이동 난이도</li><li style="font-size:24px">센서가 보지 못한 미관측 영역</li><li style="font-size:24px">장애물·이동곤란 영역</li><li style="font-size:24px">로봇이 지나갈 수 있는 폭</li>
+        <li style="font-size:28px">지형별 이동 난이도</li><li style="font-size:28px">센서가 보지 못한 미관측 영역</li><li style="font-size:28px">장애물·이동곤란 영역</li><li style="font-size:28px">로봇이 지나갈 수 있는 폭</li>
       </ul>
       <div style="background:var(--amber);color:#fff;border-radius:10px;padding:18px;text-align:center;font-size:27px;font-weight:700">→ 함께 고려한 경로 후보 판단</div>
     </div>
@@ -286,12 +288,12 @@ body.noanim *{transition:none!important;animation:none!important}
 <!-- 7 경쟁 축 -->
 <section class="slide" data-n="7" data-title="판단 알고리즘으로"><div class="pad">
   <div class="hd"><h2>경쟁력은 '판단 알고리즘'으로 옮겨가고 있습니다<span class="lead">플랫폼 성능보다 오프로드 인식·이동가능성 판단·경로 계획이 승부처</span></h2><img src="img/logo_dark.png" alt=""></div>
-  <div class="body" style="grid-template-columns:1fr 90px 1fr;grid-template-rows:1fr 1fr">
+  <div class="body" style="grid-template-columns:1fr 90px 1fr;grid-template-rows:auto auto;align-content:center;row-gap:44px">
     <div class="box rise" style="--d:.05s"><h3 style="color:var(--muted)">과거: 플랫폼 중심</h3><ul style="margin-top:12px"><li>로봇 몸체의 기동성</li><li>원격 운용·영상 전송</li><li>센서·페이로드 확장</li></ul></div>
     <div class="rise" style="--d:.15s;display:flex;align-items:center;justify-content:center"><svg width="70" height="70" viewBox="0 0 70 70" aria-hidden="true"><path d="M8 35h44M38 18l18 17-18 17" fill="none" stroke="#D9971E" stroke-width="7" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
     <div class="box amber rise" style="--d:.2s"><h3 style="color:#a86f0c">앞으로: 판단 알고리즘 중심</h3><ul style="margin-top:12px"><li>비정형 지형 인식</li><li>이동가능성(traversability) 판단</li><li>지형 비용 기반 경로 계획</li></ul></div>
-    <div class="box rise" style="--d:.3s;grid-column:1/2;background:#DCE5D6"><h3 style="color:var(--olive)">해외 사례: DARPA RACER</h3><p>미국 국방고등연구계획국 프로그램. 비정형 오프로드에서 UGV가 스스로 기동하는 알고리즘 개발에 초점</p></div>
-    <div class="box rise" style="--d:.38s;grid-column:2/4;background:#DCE5D6"><h3 style="color:var(--olive)">국방 분야의 조건: 폐쇄망 운용</h3><p>폐쇄망·제한환경 운용이 중요 → 해외 플랫폼 의존이 아닌, 국내 환경에 적용 가능한 자율항법 AI 알고리즘이 필요</p></div>
+    <div class="box rise" style="--d:.3s;grid-column:1/2"><h3 style="color:var(--olive)">해외 사례: DARPA RACER</h3><p>미국 국방고등연구계획국 프로그램. 비정형 오프로드에서 UGV가 스스로 기동하는 알고리즘 개발에 초점</p></div>
+    <div class="box rise" style="--d:.38s;grid-column:3"><h3 style="color:var(--olive)">국방 분야의 조건: 폐쇄망 운용</h3><p>폐쇄망·제한환경 운용이 중요 → 해외 플랫폼 의존이 아닌, 국내 환경에 적용 가능한 자율항법 AI 알고리즘이 필요</p></div>
   </div>
   <div class="src">출처: A4AI 사업계획서 국외 동향, 정책 측면 필요성</div>
 </div><div class="foot"><span>01 왜 필요한가</span><span class="pg"></span></div></section>
@@ -357,7 +359,7 @@ body.noanim *{transition:none!important;animation:none!important}
 <!-- 12 왜 A4AI -->
 <section class="slide" data-n="12" data-title="왜 A4AI인가"><div class="pad">
   <div class="hd"><h2>왜 A4AI인가: 기술 기반과 수행 역량<span class="lead">선행 연구와 특허, 군용 관제시스템 경험, 연구 인력</span></h2><img src="img/logo_dark.png" alt=""></div>
-  <div class="body" style="grid-template-columns:repeat(3,1fr);grid-template-rows:auto 1fr">
+  <div class="body" style="grid-template-columns:repeat(3,1fr);grid-template-rows:auto auto;align-content:center;row-gap:30px">
     <div class="box rise" style="grid-column:1/4;display:grid;grid-template-columns:1fr 330px;gap:24px;align-items:center;padding:16px 20px">
       <div><img src="img/rise_row.png" alt="RISE 선행 연구: 이동가능성 지도, 노드, 그래프, A* 경로" style="width:100%;display:block;border-radius:6px"><div style="display:grid;grid-template-columns:repeat(4,1fr);text-align:center;font-size:17px;font-weight:700;color:var(--muted);margin-top:6px"><span>이동가능성 지도</span><span>노드</span><span>그래프</span><span>A* 경로</span></div></div>
       <div><h3>RISE 선행 연구</h3><p>5클래스 지도 → 그래프 → A* 경로탐색<br><span style="color:var(--muted)">(데이터셋 기반 선행 결과)</span></p></div>
@@ -379,21 +381,11 @@ body.noanim *{transition:none!important;animation:none!important}
 <!-- 14 5클래스 + 모델 비교 (그래프) -->
 <section class="slide" data-n="14" data-title="5클래스와 모델 비교"><div class="pad">
   <div class="hd"><h2>위험도별 5클래스와 모델 비교<span class="lead">RELLIS-3D 클래스를 이동 판단용 5그룹으로 묶어 MobileNet 계열을 자체 학습</span></h2><img src="img/logo_dark.png" alt=""></div>
-  <div class="body" style="grid-template-columns:1fr 1.15fr;grid-template-rows:1fr auto">
-    <div class="box" style="display:flex;flex-direction:column;gap:12px">
-      <h3>클래스별 이동 비용 <span style="font-size:17px;color:var(--muted);font-weight:500">클수록 지나가기 어려움</span></h3>
-      <div style="display:grid;gap:16px;flex:1;align-content:center">
-        <div class="hrow" style="grid-template-columns:120px 250px 1fr"><img src="img/g_c1.jpg" alt="" style="width:120px;height:74px;object-fit:cover;border-radius:8px"><div class="lab">Free<small>dirt, asphalt, concrete</small></div><div class="hb hbar" style="width:6%;background:var(--free);--d:.1s">0</div></div>
-        <div class="hrow" style="grid-template-columns:120px 250px 1fr"><img src="img/g_c2.jpg" alt="" style="width:120px;height:74px;object-fit:cover;border-radius:8px"><div class="lab">Low-Cost<small>grass, puddle, mud, rubble</small></div><div class="hb hbar" style="width:33%;background:var(--low);color:#3b3510;--d:.25s">33</div></div>
-        <div class="hrow" style="grid-template-columns:120px 250px 1fr"><img src="img/g_c3.jpg" alt="" style="width:120px;height:74px;object-fit:cover;border-radius:8px"><div class="lab">Medium-Cost<small>bush</small></div><div class="hb hbar" style="width:66%;background:var(--med);--d:.4s">66</div></div>
-        <div class="hrow" style="grid-template-columns:120px 250px 1fr"><img src="img/g_c4.jpg" alt="" style="width:120px;height:74px;object-fit:cover;border-radius:8px"><div class="lab">Obstacle<small>tree, pole, vehicle, person …</small></div><div class="hb hbar" style="width:100%;background:var(--obs);--d:.55s">100</div></div>
-        <div class="hrow" style="grid-template-columns:120px 250px 1fr"><img src="img/g_c0.jpg" alt="" style="width:120px;height:74px;object-fit:cover;border-radius:8px"><div class="lab">Unknown<small>void, water, sky</small></div><div class="hb hbar" style="width:100%;--d:.7s;justify-content:flex-start;padding-left:12px;color:#4d554f;background:repeating-linear-gradient(135deg,#dfe4dd 0 10px,#cfd6cd 10px 20px)">-1 · 미확인 (비용이 아닌 '모름' 표시)</div></div>
-      </div>
-      <div class="concept">예시 지형 사진: 개념 이미지 (AI 생성)</div>
-    </div>
-    <div class="box" style="display:flex;flex-direction:column;gap:14px">
+  <div class="body" style="grid-template-columns:1fr 1.15fr;grid-template-rows:auto auto;align-content:center;row-gap:34px">
+    <div class="box" style="gap:6px"><h3>위험도별 5클래스 <span style="font-size:18px;color:var(--muted);font-weight:500">숫자: 표시용 비용값, 클수록 지나가기 어려움</span></h3><div style="display:grid;grid-template-columns:110px 1fr 70px;gap:18px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)"><img src="img/g_c1.jpg" alt="" style="width:110px;height:66px;object-fit:cover;border-radius:8px"><div><div style="font-size:25px;font-weight:700"><i style="display:inline-block;width:14px;height:14px;border-radius:50%;background:var(--free);margin-right:10px"></i>Free</div><div style="font-size:18px;color:var(--muted)">dirt, asphalt, concrete</div></div><div style="font-size:30px;font-weight:900;text-align:right;font-variant-numeric:tabular-nums">0</div></div><div style="display:grid;grid-template-columns:110px 1fr 70px;gap:18px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)"><img src="img/g_c2.jpg" alt="" style="width:110px;height:66px;object-fit:cover;border-radius:8px"><div><div style="font-size:25px;font-weight:700"><i style="display:inline-block;width:14px;height:14px;border-radius:50%;background:var(--low);margin-right:10px"></i>Low-Cost</div><div style="font-size:18px;color:var(--muted)">grass, puddle, mud, rubble</div></div><div style="font-size:30px;font-weight:900;text-align:right;font-variant-numeric:tabular-nums">33</div></div><div style="display:grid;grid-template-columns:110px 1fr 70px;gap:18px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)"><img src="img/g_c3.jpg" alt="" style="width:110px;height:66px;object-fit:cover;border-radius:8px"><div><div style="font-size:25px;font-weight:700"><i style="display:inline-block;width:14px;height:14px;border-radius:50%;background:var(--med);margin-right:10px"></i>Medium-Cost</div><div style="font-size:18px;color:var(--muted)">bush</div></div><div style="font-size:30px;font-weight:900;text-align:right;font-variant-numeric:tabular-nums">66</div></div><div style="display:grid;grid-template-columns:110px 1fr 70px;gap:18px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)"><img src="img/g_c4.jpg" alt="" style="width:110px;height:66px;object-fit:cover;border-radius:8px"><div><div style="font-size:25px;font-weight:700"><i style="display:inline-block;width:14px;height:14px;border-radius:50%;background:var(--obs);margin-right:10px"></i>Obstacle</div><div style="font-size:18px;color:var(--muted)">tree, pole, vehicle, person …</div></div><div style="font-size:30px;font-weight:900;text-align:right;font-variant-numeric:tabular-nums">100</div></div><div style="display:grid;grid-template-columns:110px 1fr 70px;gap:18px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)"><img src="img/g_c0.jpg" alt="" style="width:110px;height:66px;object-fit:cover;border-radius:8px"><div><div style="font-size:25px;font-weight:700"><i style="display:inline-block;width:14px;height:14px;border-radius:50%;background:var(--unk);margin-right:10px"></i>Unknown</div><div style="font-size:18px;color:var(--muted)">void, water, sky (미확인)</div></div><div style="font-size:30px;font-weight:900;text-align:right;font-variant-numeric:tabular-nums">-1</div></div><div class="concept" style="margin-top:10px">예시 지형 사진: 개념 이미지 (AI 생성)</div></div>
+    <div class="box" style="gap:14px">
       <div style="display:flex;justify-content:space-between;align-items:baseline"><h3>모델 비교 <span style="font-size:17px;color:var(--muted);font-weight:500">제공 지표표 기준</span></h3><div class="legend"><span><i style="background:var(--amber)"></i>MobileNet 계열 (자체 학습)</span><span><i style="background:var(--gan)"></i>GANav (기본 모델)</span></div></div>
-      <div style="display:grid;gap:30px;flex:1;align-content:center">
+      <div style="display:grid;gap:26px;margin-top:6px">
         <div class="hrow"><div class="lab">영상 처리시간<small>짧을수록 빠름</small></div><div class="htrack"><div class="hb hbar" style="width:15.1%;background:var(--amber);--d:.15s">10.86 ms</div><div class="hb hbar" style="width:100%;background:var(--gan);--d:.3s">72.11 ms</div></div></div>
         <div class="hrow"><div class="lab">처리율<small>클수록 빠름</small></div><div class="htrack"><div class="hb hbar" style="width:100%;background:var(--amber);--d:.35s">99.4 FPS</div><div class="hb hbar" style="width:13.9%;background:var(--gan);--d:.5s">13.8</div></div></div>
         <div class="hrow"><div class="lab">평균 클래스 정확도</div><div class="htrack"><div class="hb hbar" style="width:72%;background:var(--amber);--d:.55s">72%</div><div class="hb hbar" style="width:71%;background:var(--gan);--d:.7s">71%</div></div></div>
@@ -425,7 +417,7 @@ body.noanim *{transition:none!important;animation:none!important}
         <div style="display:grid;grid-template-columns:36px 1fr;gap:10px;align-items:start"><span class="tag amber">4</span><div><b style="font-size:25px">원격 조작 패널</b><div style="font-size:16px;color:var(--muted)">/cmd_vel</div></div></div>
       </div>
     </div>
-    <div class="band olive rise" style="--d:.3s;grid-column:1/3"><b>다음 변경</b><span>Livox Mid 360S(3D LiDAR) 도착 후 부착 예정 · 표시 목표는 GCS-Saker (현재 Foxglove는 개발용)</span></div>
+    <div class="band olive rise" style="--d:.3s;grid-column:1/3"><b>다음 변경</b><span>Livox Mid 360S(3D LiDAR) 도착 완료 · 로봇 부착용 장비를 기다리는 중 → 부착 후 연동 검증 · 표시 목표는 GCS-Saker</span></div>
   </div>
 </div><div class="foot"><span>03 지금 어디까지 왔나</span><span class="pg"></span></div></section>
 
@@ -459,10 +451,10 @@ body.noanim *{transition:none!important;animation:none!important}
   <div class="hd"><h2>PM의 개발·검증 계획<span class="lead">작업마다 '무엇이 남으면 완료인지' 증빙을 함께 정했습니다</span></h2><img src="img/logo_dark.png" alt=""></div>
   <div class="body" style="grid-template-rows:auto auto;align-content:center;gap:28px">
     <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:14px">
-      <div class="box amber rise" style="--d:.05s;display:flex;flex-direction:column;justify-content:flex-start;min-height:520px"><span class="tag amber" style="align-self:flex-start">장비 도착 전 바로 시작</span><h3 style="margin-top:14px;font-size:28px">모델 개선</h3><p>추가 학습 대상 결정, 오류 사례 정리, 같은 조건 재평가</p><p style="margin-top:auto;padding-top:14px;border-top:1px solid #ecd9ad;font-size:18px;color:#7a5a12"><b>증빙</b> 데이터·클래스 기준, 모델별 지표, 비교 화면</p></div>
-      <div class="box rise" style="--d:.15s;display:flex;flex-direction:column;justify-content:flex-start;min-height:520px"><span class="tag" style="align-self:flex-start">장비 도착 후</span><h3 style="margin-top:14px;font-size:28px">센서 교체</h3><p>Mid 360S 도착·부착 → ROS2 수신 → TF·표시 점검 → 재시험</p><p style="margin-top:auto;padding-top:14px;border-top:1px solid var(--line);font-size:18px;color:var(--muted)"><b>증빙</b> 장착 기록, 토픽 확인, 화면·로그</p></div>
-      <div class="box rise" style="--d:.25s;display:flex;flex-direction:column;justify-content:flex-start;min-height:520px"><span class="tag" style="align-self:flex-start">이어서</span><h3 style="margin-top:14px;font-size:28px">경로판단 통합</h3><p>Cost Map·경로 후보 기능 상태 확인과 구현·연결</p><p style="margin-top:auto;padding-top:14px;border-top:1px solid var(--line);font-size:18px;color:var(--muted)"><b>증빙</b> 입력·지도·경로·비용 비교 결과</p></div>
-      <div class="box rise" style="--d:.35s;display:flex;flex-direction:column;justify-content:flex-start;min-height:520px"><span class="tag" style="align-self:flex-start">마지막</span><h3 style="margin-top:14px;font-size:28px">최종 검증</h3><p>시험절차 적용, 야지 시험, SW 품질평가·등록</p><p style="margin-top:auto;padding-top:14px;border-top:1px solid var(--line);font-size:18px;color:var(--muted)"><b>증빙</b> 시험 결과, 로그·영상, 평가·등록 자료</p></div>
+      <div class="box amber rise" style="--d:.05s;display:flex;flex-direction:column;justify-content:flex-start"><span class="tag amber" style="align-self:flex-start">지금 바로 진행</span><h3 style="margin-top:14px;font-size:28px">모델 개선</h3><p>추가 학습 대상 결정, 오류 사례 정리, 같은 조건 재평가</p><p style="margin-top:26px;padding-top:14px;border-top:1px solid #ecd9ad;font-size:18px;color:#7a5a12"><b>증빙</b> 데이터·클래스 기준, 모델별 지표, 비교 화면</p></div>
+      <div class="box rise" style="--d:.15s;display:flex;flex-direction:column;justify-content:flex-start"><span class="tag" style="align-self:flex-start">부착 장비 수급 후</span><h3 style="margin-top:14px;font-size:28px">센서 교체</h3><p>Mid 360S 도착 완료 → 부착 장비 수급 후 부착 → ROS2 수신 → TF·표시 점검 → 재시험</p><p style="margin-top:26px;padding-top:14px;border-top:1px solid var(--line);font-size:18px;color:var(--muted)"><b>증빙</b> 장착 기록, 토픽 확인, 화면·로그</p></div>
+      <div class="box rise" style="--d:.25s;display:flex;flex-direction:column;justify-content:flex-start"><span class="tag" style="align-self:flex-start">이어서</span><h3 style="margin-top:14px;font-size:28px">경로판단 통합</h3><p>Cost Map·경로 후보 기능 상태 확인과 구현·연결</p><p style="margin-top:26px;padding-top:14px;border-top:1px solid var(--line);font-size:18px;color:var(--muted)"><b>증빙</b> 입력·지도·경로·비용 비교 결과</p></div>
+      <div class="box rise" style="--d:.35s;display:flex;flex-direction:column;justify-content:flex-start"><span class="tag" style="align-self:flex-start">마지막</span><h3 style="margin-top:14px;font-size:28px">최종 검증</h3><p>시험절차 적용, 야지 시험, SW 품질평가·등록</p><p style="margin-top:26px;padding-top:14px;border-top:1px solid var(--line);font-size:18px;color:var(--muted)"><b>증빙</b> 시험 결과, 로그·영상, 평가·등록 자료</p></div>
     </div>
     <div class="rise" style="--d:.45s;position:relative;height:14px;background:var(--field);border-radius:7px;overflow:hidden"><div class="hbar" style="--d:.6s;position:absolute;inset:0;background:linear-gradient(90deg,var(--amber) 0 25%,var(--olive) 25% 100%)"></div></div>
   </div>
@@ -492,9 +484,9 @@ body.noanim *{transition:none!important;animation:none!important}
       <div class="box rise" style="--d:.8s"><div style="font-size:18px;font-weight:700;color:var(--olive)">4단계</div><h3 style="font-size:28px;margin-top:6px">옵션화·양산 검토</h3><p>플랫폼 옵션화<br>공인시험·조달 등록</p></div>
     </div>
     <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
-      <div class="box rise" style="--d:1s;background:#DCE5D6"><h3 style="color:var(--olive)">플랫폼 기업 채널</h3><p>군용 사족보행 로봇·UGV 플랫폼 기업에 자율항법 옵션 알고리즘 PoC·탑재성 검토 제안</p></div>
-      <div class="box rise" style="--d:1.1s;background:#DCE5D6"><h3 style="color:var(--olive)">군·공공 실증 채널</h3><p>정찰·감시, 기지방어, CBRN 정찰, 위험지역 선탐색 등 실증사업 연계</p></div>
-      <div class="box rise" style="--d:1.2s;background:#DCE5D6"><h3 style="color:var(--olive)">공공·민간 확장</h3><p>산림·소방·재난 대응, 산업안전, 위험설비 점검 등 험지 이동체</p></div>
+      <div class="box rise" style="--d:1s"><h3 style="color:var(--olive)">플랫폼 기업 채널</h3><p>군용 사족보행 로봇·UGV 플랫폼 기업에 자율항법 옵션 알고리즘 PoC·탑재성 검토 제안</p></div>
+      <div class="box rise" style="--d:1.1s"><h3 style="color:var(--olive)">군·공공 실증 채널</h3><p>정찰·감시, 기지방어, CBRN 정찰, 위험지역 선탐색 등 실증사업 연계</p></div>
+      <div class="box rise" style="--d:1.2s"><h3 style="color:var(--olive)">공공·민간 확장</h3><p>산림·소방·재난 대응, 산업안전, 위험설비 점검 등 험지 이동체</p></div>
     </div>
   </div>
   <div class="src">출처: A4AI 사업계획서 사업화 기본방향, 판로 확보 계획</div>
@@ -568,15 +560,15 @@ body.noanim *{transition:none!important;animation:none!important}
 
 <!-- 25 부록 C -->
 <section class="slide" data-n="25" data-title="부록 C. Livox 교체"><div class="pad">
-  <div class="hd"><h2>부록 C. Livox Mid 360S 교체 단계<span class="lead">현재 상태: 장비 도착 후 JetRover에 부착 예정 · 일정 미확정</span></h2><img src="img/logo_dark.png" alt=""></div>
+  <div class="hd"><h2>부록 C. Livox Mid 360S 교체 단계<span class="lead">현재 상태: Mid 360S 도착 완료 · 로봇 부착용 장비 수급 대기</span></h2><img src="img/logo_dark.png" alt=""></div>
   <div class="body" style="grid-template-rows:300px auto;align-content:center;gap:24px">
     <div class="photo"><img src="img/g_pc.jpg" alt=""><span class="cap">개념 이미지 (AI 생성)</span></div>
     <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:14px">
-      <div class="box amber"><div style="font-weight:900;color:var(--amber);font-size:22px">1</div><h3>장비 도착</h3><p>도착 대기</p></div>
-      <div class="box"><div style="font-weight:900;color:var(--olive);font-size:22px">2</div><h3>부착</h3><p>JetRover 장착</p></div>
-      <div class="box"><div style="font-weight:900;color:var(--olive);font-size:22px">3</div><h3>ROS2 연결</h3><p>데이터 수신 확인</p></div>
-      <div class="box"><div style="font-weight:900;color:var(--olive);font-size:22px">4</div><h3>TF·표시 점검</h3><p>부착 위치 반영, 개발 화면 확인</p></div>
-      <div class="box"><div style="font-weight:900;color:var(--olive);font-size:22px">5</div><h3>재시험</h3><p>데이터 품질·처리 부하 확인</p></div>
+      <div class="box fill"><div style="font-weight:900;color:var(--olive);font-size:22px">1 · 완료</div><h3>센서 도착</h3><p>Livox Mid 360S 수령</p></div>
+      <div class="box amber"><div style="font-weight:900;color:var(--amber);font-size:22px">2 · 진행 중</div><h3>부착 장비 수급</h3><p>로봇 부착용 장비 대기</p></div>
+      <div class="box fill"><div style="font-weight:900;color:var(--olive);font-size:22px">3</div><h3>부착·ROS2 연결</h3><p>JetRover 장착, 데이터 수신 확인</p></div>
+      <div class="box fill"><div style="font-weight:900;color:var(--olive);font-size:22px">4</div><h3>TF·표시 점검</h3><p>부착 위치 반영, 개발 화면 확인</p></div>
+      <div class="box fill"><div style="font-weight:900;color:var(--olive);font-size:22px">5</div><h3>재시험</h3><p>데이터 품질·처리 부하 확인</p></div>
     </div>
   </div>
 </div><div class="foot"><span>부록</span><span class="pg"></span></div></section>
@@ -608,7 +600,7 @@ body.noanim *{transition:none!important;animation:none!important}
 <!-- 27 부록 E -->
 <section class="slide" data-n="27" data-title="부록 E. 용어 정리"><div class="pad">
   <div class="hd"><h2>부록 E. 용어 정리</h2><img src="img/logo_dark.png" alt=""></div>
-  <div class="body" style="grid-template-columns:1fr 1fr;grid-template-rows:repeat(4,1fr)">
+  <div class="body" style="grid-template-columns:1fr 1fr;grid-template-rows:repeat(4,auto);align-content:center;row-gap:30px">
     <div class="box"><h3 style="color:var(--olive)">UGV</h3><p>Unmanned Ground Vehicle. 사람이 타지 않는 무인 지상 이동체</p></div>
     <div class="box"><h3 style="color:var(--olive)">MUM-T</h3><p>유무인복합체계. 사람과 무인체계가 함께 작전하는 개념</p></div>
     <div class="box"><h3 style="color:var(--olive)">LiDAR</h3><p>레이저로 거리를 재서 주변을 점으로 그리는 센서</p></div>
@@ -650,6 +642,11 @@ NOTES[21] = `[1:00]
 넷째, 시장이 커지고 있습니다. 사업계획서 추정으로 적용 가능 시장은 2026년 약 1,561억 원에서 2030년 약 2,109억 원으로 커지고, 저희는 검증, PoC, 실증 순서로 단계적으로 진입합니다.
 
 PM으로서 각 단계의 완료 기준과 증빙을 꼼꼼히 관리해, 이 판단 AI를 현장에서 쓰이는 기술로 만들겠습니다.`;
+
+
+NOTES[15] = (NOTES[15] || "").replace("또 다음 단계에서 3D LiDAR인 Livox Mid 360S를 장비가 도착하는 대로 부착할 예정이라, 오늘 화면은 교체 전 센서 구성의 결과입니다.", "3D LiDAR인 Livox Mid 360S는 이미 도착했고, 지금은 로봇에 부착할 장비를 기다리고 있습니다. 부착이 끝나면 새 센서로 연동 검증을 이어가며, 오늘 화면은 교체 전 센서 구성의 결과입니다.");
+NOTES[18] = (NOTES[18] || "").replace("둘째, 센서 교체입니다. Livox Mid 360S가 도착하면 JetRover에 부착하고, 데이터 수신, 부착 위치에 맞춘 TF 설정, 화면 표시를 차례로 점검한 뒤 재시험합니다.", "둘째, 센서 교체입니다. Livox Mid 360S는 이미 도착했고, 로봇 부착용 장비가 들어오는 대로 JetRover에 부착해 데이터 수신, 부착 위치에 맞춘 TF 설정, 화면 표시를 차례로 점검한 뒤 재시험합니다.").replace("순서 면에서는, 장비 도착 전에도 모델 비교 조건 정리와 추가 학습 준비는 바로 진행할 수 있고, 센서 작업만 장비 도착에 묶여 있습니다.", "순서 면에서는, 모델 비교 조건 정리와 추가 학습 준비는 지금 바로 진행하고, 센서 작업만 부착 장비 수급에 묶여 있습니다.");
+NOTES[25] = "[질의응답용]\nLivox Mid 360S는 도착했고, 로봇 부착용 장비를 기다리고 있습니다. 부착 후 ROS2 연결, TF·표시 점검, 재시험 순서로 진행합니다. 제품 사양은 실제 시험 결과로만 기재합니다.";
 
 /* ───── 무대 크기 ───── */
 const stage = document.getElementById("stage"), vp = document.getElementById("viewport");
