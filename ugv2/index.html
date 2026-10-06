@@ -197,7 +197,6 @@ body.noanim *{transition:none!important;animation:none!important}
   <nav>
     <button id="bIntro">인트로</button>
     <button id="bList">전체 보기</button>
-    <button id="bNotes">발표자 노트</button>
     <a href="ugv_presentation.pdf" download>PDF 다운로드</a>
   </nav>
 </header>
@@ -623,12 +622,10 @@ body.noanim *{transition:none!important;animation:none!important}
 
 </div><div class="progress" id="prog"></div></main>
 
-<div id="notes"></div>
 
 <footer class="bot">
   <button id="prev" aria-label="이전 슬라이드">◀ 이전</button>
   <button id="next" aria-label="다음 슬라이드">다음 ▶</button>
-  <button id="bN">발표 설명 (N)</button>
   <button id="bF">전체 화면 (F)</button>
   <span class="ttl" id="ttl"></span>
   <span class="cnt" id="cnt"></span>
@@ -637,35 +634,8 @@ body.noanim *{transition:none!important;animation:none!important}
 <div id="list" role="dialog" aria-label="슬라이드 목록"><button class="close" id="lClose">닫기 (Esc)</button><div id="lBody"></div></div>
 
 <style>.donut{transition:stroke-dashoffset 1.2s var(--ease) .2s}.slide.active .donut{stroke-dashoffset:var(--off)}</style>
-<script src="notes_v8.js"></script>
-<script src="notes_v11.js"></script>
 <script>
-/* ───── 발표자 노트: v8 대본 + 새 투자 슬라이드 ───── */
-const NOTES = {}; (window.SLIDES || []).forEach((s) => NOTES[s.n] = s.notes);
-NOTES[21] = `[1:00]
-정리하겠습니다. 오늘 드린 말씀을 한 문장으로 줄이면 이렇습니다. 로봇은 이미 현장에 들어왔습니다. 이제 필요한 것은 그 로봇이 야지에서 어디로 갈지 판단하는 국산 AI입니다.
 
-여기에 투자해야 하는 이유는 네 가지입니다.
-첫째, 수요가 확실합니다. 병력 감축과 위험임무 증가로 군은 이미 로봇 도입을 시작했고, 2024년 국방서비스로봇 실증이 그 예입니다.
-둘째, 핵심이 비어 있습니다. 지금까지 실증은 원격운용과 영상 전송 중심이었고, 야지에서 스스로 길을 고르는 판단은 공백입니다. 폐쇄망에서 운용하는 군 특성상 국산 알고리즘이 필요합니다.
-셋째, 실행할 준비가 돼 있습니다. 공동출원 특허, 실제 센서 위에서 동작하는 소프트웨어, 그리고 군용 관제시스템을 구현한 경험이 있습니다.
-넷째, 시장이 커지고 있습니다. 사업계획서 추정으로 적용 가능 시장은 2026년 약 1,561억 원에서 2030년 약 2,109억 원으로 커지고, 저희는 검증, PoC, 실증 순서로 단계적으로 진입합니다.
-
-PM으로서 각 단계의 완료 기준과 증빙을 꼼꼼히 관리해, 이 판단 AI를 현장에서 쓰이는 기술로 만들겠습니다.`;
-
-
-NOTES[15] = (NOTES[15] || "").replace("또 다음 단계에서 3D LiDAR인 Livox Mid 360S를 장비가 도착하는 대로 부착할 예정이라, 오늘 화면은 교체 전 센서 구성의 결과입니다.", "3D LiDAR인 Livox Mid 360S는 이미 도착했고, 지금은 로봇에 부착할 장비를 기다리고 있습니다. 부착이 끝나면 새 센서로 연동 검증을 이어가며, 오늘 화면은 교체 전 센서 구성의 결과입니다.");
-NOTES[18] = (NOTES[18] || "").replace("둘째, 센서 교체입니다. Livox Mid 360S가 도착하면 JetRover에 부착하고, 데이터 수신, 부착 위치에 맞춘 TF 설정, 화면 표시를 차례로 점검한 뒤 재시험합니다.", "둘째, 센서 교체입니다. Livox Mid 360S는 이미 도착했고, 로봇 부착용 장비가 들어오는 대로 JetRover에 부착해 데이터 수신, 부착 위치에 맞춘 TF 설정, 화면 표시를 차례로 점검한 뒤 재시험합니다.").replace("순서 면에서는, 장비 도착 전에도 모델 비교 조건 정리와 추가 학습 준비는 바로 진행할 수 있고, 센서 작업만 장비 도착에 묶여 있습니다.", "순서 면에서는, 모델 비교 조건 정리와 추가 학습 준비는 지금 바로 진행하고, 센서 작업만 부착 장비 수급에 묶여 있습니다.");
-NOTES[25] = "[질의응답용]\nLivox Mid 360S는 도착했고, 로봇 부착용 장비를 기다리고 있습니다. 부착 후 ROS2 연결, TF·표시 점검, 재시험 순서로 진행합니다. 제품 사양은 실제 시험 결과로만 기재합니다.";
-
-NOTES[10] = (NOTES[10] || "").replace("5개 기능 알고리즘으로 구성된 야지 경로판단 SW", "지형을 5개 클래스로 분할해 판단하는 야지 경로판단 SW");
-NOTES[15] = "[1:30]\n시험에 쓰는 장비는 오른쪽 사진의 Hiwonder JetRover라는 소형 로봇입니다. 카메라와 LiDAR 데이터를 ROS2로 주고받고, 결과는 Foxglove라는 화면 도구로 확인합니다.\n\n왼쪽이 실제 개발 화면입니다. 1번은 카메라 원본, 2번은 AI가 지형별로 색칠한 분류 결과, 3번은 LiDAR 정보를 표시한 3D 화면, 4번은 로봇을 원격으로 움직이는 조작 패널입니다. 패널 위에 적힌 이름은 데이터 종류별 전달 통로인 ROS2 토픽입니다.\n\n그리고 3D LiDAR인 Livox Mid 360S는 로봇에 부착을 마쳤고, 지금은 ROS2 수신, 좌표 설정, 화면 표시까지 연동 검증을 진행하고 있습니다. 오늘 보여드리는 화면은 교체 전 센서 구성의 결과입니다.";
-NOTES[16] = "[1:30]\n실제 테스트 영상입니다. 저희가 직접 학습한 MobileNet 계열 모델이고, 왼쪽이 카메라 원본, 오른쪽이 분류 결과입니다.\n\n[영상 재생, 약 10~15초]\n\n실제 센서 입력으로 모델이 지형을 나누는 모습을 확인할 수 있습니다. 앞에서 말씀드린 것처럼 화면 비교에서는 GANav 기본 모델 결과가 더 양호하게 보였고, 그래서 저희 모델은 추가 학습으로 고도화할 계획입니다.\n\n다음으로 같은 입력, 같은 클래스 기준으로 정량평가를 하고, 어떤 장면에서 잘못 분류되는지 오류 사례를 모으겠습니다.";
-NOTES[18] = (NOTES[18] || "").replace(/둘째, 센서 교체입니다\.[^\n]*?재시험합니다\./, "둘째, 센서 교체입니다. Livox Mid 360S는 부착을 마쳤고, 지금은 데이터 수신, 부착 위치에 맞춘 TF 설정, 화면 표시를 연동 검증하고 있습니다. 검증이 끝나면 재시험합니다.").replace(/순서 면에서는[^\n]*?묶여 있습니다\./, "순서 면에서는, 모델 개선과 센서 연동 검증을 지금 함께 진행하고, 이어서 경로판단 통합과 최종 검증으로 넘어갑니다.");
-NOTES[22] = "[0:10]\n들어주셔서 감사합니다. 질문 받겠습니다.\n\n(질의응답 중 필요하면 부록을 띄우세요: A 클래스 전체 매핑, B 모델 지표 상세, C Livox 교체 단계, D 사업 규모와 문서 기준)";
-NOTES[25] = "[질의응답용]\nLivox Mid 360S는 로봇에 부착을 마쳤고, 지금은 ROS2 수신과 TF·화면 표시 연동 검증을 진행 중입니다. 검증 후 재시험으로 데이터 품질과 처리 부하를 확인합니다. 제품 사양은 실제 시험 결과로만 기재합니다.";
-
-Object.assign(NOTES, window.NOTES_V11 || {});
 /* ───── 무대 크기 ───── */
 const stage = document.getElementById("stage"), vp = document.getElementById("viewport");
 function fit() { const s = Math.min(vp.clientWidth / 1920, vp.clientHeight / 1080) * (document.body.classList.contains("full") ? 1 : 0.97); stage.style.transform = `scale(${s})`; }
@@ -693,14 +663,10 @@ function go(i, push = true) {
   document.getElementById("ttl").textContent = slides[i].dataset.title;
   document.getElementById("cnt").textContent = `${i + 1} / ${total}`;
   document.getElementById("prog").style.width = ((i + 1) / total * 100) + "%";
-  document.getElementById("notes").textContent = NOTES[slides[i].dataset.n] || "";
   if (push) history.replaceState(null, "", "#" + (i + 1));
 }
 document.getElementById("prev").onclick = () => go(cur - 1);
 document.getElementById("next").onclick = () => go(cur + 1);
-const toggleNotes = () => { document.getElementById("notes").classList.toggle("on"); fit(); };
-document.getElementById("bN").onclick = toggleNotes;
-document.getElementById("bNotes").onclick = () => openList("notes");
 function toggleFull() { if (document.fullscreenElement) document.exitFullscreen(); else document.documentElement.requestFullscreen(); }
 document.getElementById("bF").onclick = toggleFull;
 document.addEventListener("fullscreenchange", () => { document.body.classList.toggle("full", !!document.fullscreenElement); setTimeout(fit, 50); });
@@ -710,7 +676,6 @@ const list = document.getElementById("list"), lBody = document.getElementById("l
 function openList(kind) {
   if (kind === "notes") lBody.innerHTML = "<h2>발표자 노트</h2><div class='nt'>" + slides.map((s, i) => `<section><h3>${i + 1}. ${s.dataset.title}</h3><p></p></section>`).join("") + "</div>";
   else lBody.innerHTML = "<h2>전체 슬라이드</h2><ol>" + slides.map((s, i) => `<li><button data-i="${i}"><b>${i + 1}</b>${s.dataset.title}</button></li>`).join("") + "</ol>";
-  if (kind === "notes") lBody.querySelectorAll(".nt p").forEach((p, i) => p.textContent = NOTES[slides[i].dataset.n] || "");
   lBody.querySelectorAll("button[data-i]").forEach((b) => b.onclick = () => { closeList(); go(+b.dataset.i); });
   list.classList.add("on");
 }
@@ -728,7 +693,6 @@ document.addEventListener("keydown", (e) => {
   else if (["ArrowLeft", "PageUp"].includes(e.key)) go(cur - 1);
   else if (e.key === "Home") go(0);
   else if (e.key === "End") go(total - 1);
-  else if (e.key === "n" || e.key === "N") toggleNotes();
   else if (e.key === "f" || e.key === "F") toggleFull();
 });
 stage.addEventListener("click", (e) => { if (!e.target.closest("video,button,a")) go(cur + 1); });
