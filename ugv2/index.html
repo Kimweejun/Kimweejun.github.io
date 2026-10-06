@@ -239,27 +239,30 @@ body.noanim *{transition:none!important;animation:none!important}
 </section>
 
 <!-- 4 국방 환경 -->
-<section class="slide" data-n="4" data-title="국방 환경 변화"><div class="pad">
-  <div class="hd"><h2>국방 환경이 바뀌고 있습니다<span class="lead">병력 대신 로봇이 위험한 임무를 맡는 방향으로 전환 중</span></h2><img src="img/logo_dark.png" alt=""></div>
-  <div class="body" style="grid-template-columns:1fr 1fr;grid-template-rows:auto auto;align-content:center;row-gap:34px">
-    <div style="display:grid;gap:14px">
-      <div class="box rise" style="--d:.05s"><h3>병력 감축</h3><p>줄어드는 인원으로 같은 임무를 수행해야 함</p></div>
-      <div class="box rise" style="--d:.12s"><h3>위험지역 임무 증가</h3><p>사람이 직접 들어가기 위험한 임무가 늘어남</p></div>
-      <div class="box rise" style="--d:.19s"><h3>유무인복합체계(MUM-T) 확대</h3><p>사람과 무인체계가 함께 작전하는 구조로 전환</p></div>
+<section class="slide" data-n="4" data-title="국방 환경 변화와 요구">
+<style>
+.req{display:grid;grid-template-columns:1fr 70px 1fr 70px 1fr;row-gap:16px;align-items:stretch}
+.req .colh{font-size:21px;font-weight:700;color:var(--muted);padding:0 2px 2px}
+.req .colh.k2{color:#a86f0c}
+.req .box{padding-top:16px;padding-bottom:16px}
+.req .box h3{font-size:31px;margin-bottom:6px}
+.req .box p{font-size:23px;color:#4a554d}
+.req .arrow{align-self:center;height:4px;margin:0 10px;background:var(--amber);position:relative;border-radius:2px}
+.req .arrow::after{content:"";position:absolute;right:-4px;top:50%;transform:translateY(-50%);border-left:14px solid var(--amber);border-top:10px solid transparent;border-bottom:10px solid transparent}
+</style>
+<div class="pad">
+  <div class="hd"><h2>국방 환경 변화가 이 SW에 요구하는 것<span class="lead">병력 대신 로봇이 임무를 맡으면서 생기는 요구, 그리고 이 프로젝트가 맡는 기능</span></h2><img src="img/logo_dark.png" alt=""></div>
+  <div class="body" style="grid-template-rows:auto auto;align-content:center;row-gap:28px">
+    <div class="req">
+      <div class="colh">국방 환경 변화</div><div></div><div class="colh">로봇에게 생기는 요구</div><div></div><div class="colh k2">이 SW가 맡는 기능</div>
+      <div class="box rise" style="--d:0.15s"><h3>병력 감축</h3><p>줄어든 인원 대신 로봇이 투입됨</p></div><div class="arrow hbar" style="--d:0.27s"></div><div class="box fill rise" style="--d:0.35s"><h3>넓은 구역 경계 작전을 위한 소요 증가</h3><p>줄어든 인원으로 더 넓은 구역을 경계해야 함</p></div><div class="arrow hbar" style="--d:0.45s"></div><div class="box amber rise" style="--d:0.53s"><h3 style="color:#8a5a08">경로 후보 생성·비용 비교</h3><p>여러 경로를 만들고 지형 비용으로 비교</p></div>
+      <div class="box rise" style="--d:0.60s"><h3>위험지역 임무 증가</h3><p>사람이 먼저 들어가기 위험한 임무</p></div><div class="arrow hbar" style="--d:0.72s"></div><div class="box fill rise" style="--d:0.80s"><h3>UGV로 위험지역을 효과적으로 정찰</h3><p>사람 대신 로봇이 먼저 들어가 지형을 파악</p></div><div class="arrow hbar" style="--d:0.90s"></div><div class="box amber rise" style="--d:0.98s"><h3 style="color:#8a5a08">이동 비용에 따른 Cost Map 생성</h3><p>5클래스 지형 분류를 통한 이동 비용 계산</p></div>
+      <div class="box rise" style="--d:1.05s"><h3>유무인복합체계(MUM-T) 확대</h3><p>사람과 로봇이 함께 작전</p></div><div class="arrow hbar" style="--d:1.17s"></div><div class="box fill rise" style="--d:1.25s"><h3>운용자가 로봇 판단을 확인</h3><p>왜 그 길을 골랐는지 보여 줘야 함</p></div><div class="arrow hbar" style="--d:1.35s"></div><div class="box amber rise" style="--d:1.43s"><h3 style="color:#8a5a08">판단 결과 화면 표시·로그</h3><p>경로·비용·위험 구간을 화면과 기록으로</p></div>
     </div>
-    <div class="box amber rise" style="--d:.25s;display:flex;flex-direction:column">
-      <h3 style="color:#a86f0c">로봇 투입 수요가 커지는 임무</h3>
-      <div style="display:grid;grid-template-columns:1fr 1fr;grid-auto-rows:150px;gap:14px;margin-top:16px">
-        <div style="background:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:700">GOP·GP 경계</div>
-        <div style="background:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:700">정찰·감시</div>
-        <div style="background:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:700">위험지역 선탐색</div>
-        <div style="background:#fff;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:700">CBRN(화생방) 대응</div>
-      </div>
-    </div>
-    <div class="band olive rise" style="--d:.35s;grid-column:1/3"><b>정책 방향</b><span>국방혁신 4.0: AI 적용 로봇 등 무인전투체계를 GP/GOP 경계작전에 활용하는 방향 제시</span></div>
+    <div class="band olive rise" style="--d:1.45s"><b>정책 방향</b><span>국방혁신 4.0: AI 적용 로봇 등 무인전투체계를 GP/GOP 경계작전에 활용하는 방향 제시</span></div>
   </div>
-  <div class="src">출처: A4AI 사업계획서 '개발 필요성', 국내 동향 (국방혁신 4.0 관련 공개자료 인용)</div>
-  <div class="gloss"><b>UGV</b> 사람이 타지 않는 무인 지상 이동체 · <b>MUM-T</b> 유무인복합체계, 사람과 무인체계가 함께 작전하는 개념 · <b>GOP</b> 일반전초, 남방한계선 철책을 따라 경계하는 최전방 부대 · <b>GP</b> 감시초소, 비무장지대(DMZ) 안의 초소 · <b>CBRN</b> 화학·생물·방사능·핵(화생방)</div>
+  <div class="src">출처: A4AI 사업계획서 '개발 필요성', 국내 동향(국방혁신 4.0 관련 공개자료 인용), 개발 기능(경로 후보 비교, 5클래스 판단, 결과 표시·로그)</div>
+  <div class="gloss"><b>MUM-T</b> 유무인복합체계, 사람과 무인체계가 함께 작전하는 개념 · <b>GOP</b> 일반전초, 남방한계선 철책을 따라 경계하는 최전방 부대 · <b>GP</b> 감시초소, 비무장지대(DMZ) 안의 초소</div>
 </div><div class="foot"><span>01 왜 필요한가</span><span class="pg"></span></div></section>
 
 <!-- 5 야지 현장 -->
@@ -435,7 +438,7 @@ body.noanim *{transition:none!important;animation:none!important}
       <div class="box rise" style="--d:.2s;display:grid;gap:10px;align-content:center;padding:18px 20px">
         <div style="display:grid;grid-template-columns:36px 1fr;gap:10px;align-items:start"><span class="tag amber">1</span><div><b style="font-size:25px">카메라 원본</b><div style="font-size:16px;color:var(--muted)">/depth_cam/rgb/image_raw/compressed</div></div></div>
         <div style="display:grid;grid-template-columns:36px 1fr;gap:10px;align-items:start"><span class="tag amber">2</span><div><b style="font-size:25px">세그멘테이션 결과</b><div style="font-size:16px;color:var(--muted)">/traversability_segmentation_image/compressed</div></div></div>
-        <div style="display:grid;grid-template-columns:36px 1fr;gap:10px;align-items:start"><span class="tag amber">3</span><div><b style="font-size:25px">3D 표시 (LiDAR 정보)</b></div></div>
+        <div style="display:grid;grid-template-columns:36px 1fr;gap:10px;align-items:start"><span class="tag amber">3</span><div><b style="font-size:25px">Cost Map</b></div></div>
         <div style="display:grid;grid-template-columns:36px 1fr;gap:10px;align-items:start"><span class="tag amber">4</span><div><b style="font-size:25px">원격 조작 패널</b><div style="font-size:16px;color:var(--muted)">/cmd_vel</div></div></div>
       </div>
     </div>
