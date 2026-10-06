@@ -638,6 +638,7 @@ body.noanim *{transition:none!important;animation:none!important}
 
 <style>.donut{transition:stroke-dashoffset 1.2s var(--ease) .2s}.slide.active .donut{stroke-dashoffset:var(--off)}</style>
 <script src="notes_v8.js"></script>
+<script src="notes_v11.js"></script>
 <script>
 /* ───── 발표자 노트: v8 대본 + 새 투자 슬라이드 ───── */
 const NOTES = {}; (window.SLIDES || []).forEach((s) => NOTES[s.n] = s.notes);
@@ -664,6 +665,7 @@ NOTES[18] = (NOTES[18] || "").replace(/둘째, 센서 교체입니다\.[^\n]*?�
 NOTES[22] = "[0:10]\n들어주셔서 감사합니다. 질문 받겠습니다.\n\n(질의응답 중 필요하면 부록을 띄우세요: A 클래스 전체 매핑, B 모델 지표 상세, C Livox 교체 단계, D 사업 규모와 문서 기준)";
 NOTES[25] = "[질의응답용]\nLivox Mid 360S는 로봇에 부착을 마쳤고, 지금은 ROS2 수신과 TF·화면 표시 연동 검증을 진행 중입니다. 검증 후 재시험으로 데이터 품질과 처리 부하를 확인합니다. 제품 사양은 실제 시험 결과로만 기재합니다.";
 
+Object.assign(NOTES, window.NOTES_V11 || {});
 /* ───── 무대 크기 ───── */
 const stage = document.getElementById("stage"), vp = document.getElementById("viewport");
 function fit() { const s = Math.min(vp.clientWidth / 1920, vp.clientHeight / 1080) * (document.body.classList.contains("full") ? 1 : 0.97); stage.style.transform = `scale(${s})`; }
