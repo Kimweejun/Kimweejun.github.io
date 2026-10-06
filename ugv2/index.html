@@ -447,15 +447,15 @@ body.noanim *{transition:none!important;animation:none!important}
 
 <!-- 16 영상 -->
 <section class="slide" data-n="16" data-title="실제 테스트 영상"><div class="pad">
-  <div class="hd"><h2>실제 테스트 영상과 관찰<span class="lead">MobileNet 계열(자체 학습) 모델의 실제 동작 · 왼쪽 카메라 원본, 오른쪽 분류 결과</span></h2><img src="img/logo_dark.png" alt=""></div>
+  <div class="hd"><h2>실제 테스트 영상과 관찰<span class="lead">MobileNet 계열(자체 학습) 모델의 실제 동작 · Foxglove 개발 화면 전체</span></h2><img src="img/logo_dark.png" alt=""></div>
   <div class="body" style="grid-template-columns:1.9fr 1fr;align-items:center">
     <div style="display:grid;grid-template-rows:auto auto;gap:10px;align-content:center">
       <b style="font-size:24px">MobileNet 계열 (자체 학습) · 실제 테스트 영상</b>
-      <video src="media/mob_clip.mp4" poster="media/mob_poster.jpg" controls playsinline preload="metadata" style="width:100%;aspect-ratio:1280/360;background:#000;border-radius:10px;display:block"></video><img class="print-only" src="media/mob_poster.jpg" alt="" style="width:100%;aspect-ratio:1280/360;object-fit:cover;background:#000;border-radius:10px">
+      <video src="media/mob_full_clip.mp4" poster="media/mob_full_poster.jpg" controls playsinline preload="metadata" style="width:100%;aspect-ratio:1280/674;background:#000;border-radius:10px;display:block"></video><img class="print-only" src="media/mob_full_poster.jpg" alt="" style="width:100%;aspect-ratio:1280/674;object-fit:cover;background:#000;border-radius:10px">
     </div>
     <div style="display:grid;gap:14px">
       <div class="box rise" style="--d:.1s"><span class="tag amber">확인</span><p style="margin-top:12px">카메라 원본·세그멘테이션·LiDAR 표시가 실제 센서 입력으로 동작</p></div>
-      <div class="box amber rise" style="--d:.2s"><span class="tag amber">관찰</span><p style="margin-top:12px">화면 비교에서 GANav 결과가 더 양호 → 자체 모델 추가 학습 필요</p></div>
+      <div class="box amber rise" style="--d:.2s"><span class="tag amber">관찰</span><p style="margin-top:12px">자체 학습 모델 확인 결과 추가적인 개선이 필요</p></div>
       <div class="box rise" style="--d:.3s"><span class="tag ghost">다음 확인</span><p style="margin-top:12px">오류 사례 정리, 동일 입력·동일 클래스 기준 정량평가</p></div>
     </div>
   </div>
